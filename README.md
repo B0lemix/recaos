@@ -1,7 +1,7 @@
 <h1 align="center">
   <br>
   
-![logo](./public/logo.svg)
+![logo](./public/logo2.png)
   <br>
   
 
@@ -17,7 +17,7 @@
   <a href="#license">License</a>
 </p>
 
-![logo](./public/logo.png)
+![logo](./public/logo2.png)
 
 ## Getting Started
 
@@ -25,11 +25,11 @@ Only use the app in [link](https://recaos.netlify.app) and enter your items list
 
 ## Brand Colors
 
-#eef1f0
-#b1cab2
-#9daa92
-#8a8a72
-#776b53
+- ![#eef1f0](https://placehold.co/15x15/eef1f0/eef1f0.png) `#eef1f0`
+- ![#b1cab2](https://placehold.co/15x15/b1cab2/b1cab2.png) `#b1cab2`
+- ![#9daa92](https://placehold.co/15x15/9daa92/9daa92.png) `#9daa92`
+- ![#8a8a72](https://placehold.co/15x15/8a8a72/8a8a72.png) `#8a8a72`
+- ![#776b53](https://placehold.co/15x15/776b53/776b53.png) `#776b53`
 
 
 ## Contributing
