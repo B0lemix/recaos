@@ -17,7 +17,7 @@
   <a href="#license">License</a>
 </p>
 
-![logo](./public/logo4.svg)
+![logo](./public/logo5.svg)
 
 ## Getting Started
 
