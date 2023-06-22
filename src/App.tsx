@@ -15,7 +15,7 @@ import {
 
 const style = {
    bg: 'h-screen w-screen p-4 bg-gradient-to-r from-[#b1cab2] to-[#baed8e] ',
-   img: 'object-cover h-32 w-full rounded-lg  ',
+   img: 'object-cover h-36 w-full rounded-lg  ',
    container: 'bg-slate-100 max-w-[500px] w-full m-auto rounded-md shadow-2xl p-4 font-semibold',
    heading: 'text-3xl font-bold text-center text-gray-800 p-2',
    form: 'flex justify-between ',
@@ -27,6 +27,8 @@ const style = {
 function App() {
    const [data, setData] = useState([]);
    const [input, setInput] = useState('');
+   const [editMode, setEditMode] = useState(false);
+   const [editID, setEditID] = useState('');
 
    //CREATE TODO
 
@@ -34,12 +36,20 @@ function App() {
       e.preventDefault();
       input === '' ? alert('Entrada vacía') : null;
 
-      await addDoc(collection(db, 'todos'), {
-         text: input,
-         completed: false,
-      });
+      if (!editMode) {
+         await addDoc(collection(db, 'todos'), {
+            text: input,
+            completed: false,
+         });
 
-      setInput('');
+         setInput('');
+      } else {
+         await updateDoc(doc(db, 'todos', editID), {
+            text: input,
+         });
+         console.log('updated');
+         console.log(input);
+      }
    };
 
    //READ TODO
@@ -62,6 +72,13 @@ function App() {
       await updateDoc(doc(db, 'todos', data.id), {
          completed: !data.completed,
       });
+   };
+
+   const editToDo = async (data) => {
+      console.log(data);
+      setEditMode(true);
+      setEditID(data.id);
+      setInput(data.text);
    };
 
    //DELETE TODO
@@ -96,6 +113,7 @@ function App() {
                      dataList={element}
                      toggleComplete={toggleComplete}
                      deleteToDo={deleteToDo}
+                     editToDo={editToDo}
                   />
                ))}
             </ul>
