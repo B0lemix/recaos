@@ -1,0 +1,21 @@
+input[type="checkbox"]:checked+p {
+    text-decoration-line: line-through;
+
+    animation-name: line-through;
+    animation-duration: 30ms;
+
+
+}
+
+
+@keyframes line-through {
+    0% {
+        opacity: 0.25;
+        text-decoration-color: transparent;
+    }
+
+    100% {
+        opacity: 1;
+        text-decoration-color: transparent;
+    }
+}

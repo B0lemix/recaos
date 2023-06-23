@@ -5,9 +5,10 @@ const List = ({ dataList, toggleComplete, deleteToDo, editToDo }) => {
    const style = {
       li: 'flex justify-between bg-slate-200 p-4 my-2 capitalize text-2xl font-[Caveat]',
       liCompleted: 'flex justify-between bg-slate-400 p-4 my-2 capitalize',
-      row: 'flex',
-      text: 'ml-2 cursor-pointer transform  transition duration-200 hover:scale-125 ',
-      textCompleted: ' ml-2 cursor-pointer line-through',
+      row: 'flex group',
+      text: ' ml-2 cursor-pointer transform  transition duration-200 hover:scale-110 ',
+      textCompleted:
+         'ml-2 cursor-pointer  transition-all text-lg decoration-red-500/60 decoration-4 duration-300 ease-out',
       button: ' cursor-pointer flex items-center',
    };
 
