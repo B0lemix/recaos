@@ -17,11 +17,11 @@ const style = {
    bg: ' w-full p-4 bg-gradient-to-r from-[#b1cab2] to-[#baed8e] ',
    img: 'object-cover h-36 w-full rounded-lg  ',
    container: 'bg-slate-100 max-w-[500px] w-full m-auto rounded-md shadow-2xl p-4 font-semibold',
-   heading: 'text-3xl font-bold text-center text-gray-800 p-2',
+   heading: 'text-3xl font-bold text-center text-gray-800',
    form: 'flex justify-between ',
    input: 'border p-2 w-full text-xl shadow-md',
    button: 'border p-4 ml-2 bg-[#776b53] text-slate-100 hover:bg-[#8a8a72]',
-   count: 'text-center p-2',
+   count: 'text-center p-2 mb-2 flex justify-center items-center',
 };
 
 function App() {
@@ -29,6 +29,41 @@ function App() {
    const [input, setInput] = useState('');
    const [editMode, setEditMode] = useState(false);
    const [editID, setEditID] = useState('');
+
+   /*    const [scrollPosition, setScrollPosition] = useState(0);
+
+    const handleScroll = () => {
+      const position = window.pageYOffset;
+      setScrollPosition(position);
+   };
+
+
+   
+   useEffect(() => {
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      console.log(scrollPosition);
+      return () => {
+          window.removeEventListener('scroll', handleScroll);
+      };
+   }, [scrollPosition]);
+
+ */
+
+   const [scrollPosition, setScrollPosition] = useState(0);
+
+   function handleOnScroll() {
+      const scrollTop = window.scrollY;
+      const itemTranslate = Math.min(0, scrollTop / 3 - 80);
+      setScrollPosition(itemTranslate);
+   }
+
+   useEffect(() => {
+      window.addEventListener('scroll', handleOnScroll, { passive: true });
+      /*  console.log(scrollPosition); */
+      return () => {
+         window.removeEventListener('scroll', handleOnScroll);
+      };
+   }, [scrollPosition]);
 
    //CREATE TODO
 
@@ -89,11 +124,21 @@ function App() {
 
    return (
       <div className={style.bg}>
-         <div className={style.container}>
+         <div className={style.container} onScroll={handleOnScroll}>
             <h3 className={style.heading}>
                <img className={style.img} src="/logo.svg" alt="logo"></img>{' '}
             </h3>
 
+            {data.length < 1 ? null : (
+               <p className={style.count}>
+                  {' '}
+                  Te quedan
+                  <span className="text-3xl font-bold p-1 animate-bounce-slow ">
+                     {data.filter((pendientes) => pendientes.completed === false).length}
+                  </span>
+                  recaos pendientes
+               </p>
+            )}
             <form onSubmit={createDoc} className={style.form}>
                <input
                   value={input}
@@ -119,17 +164,46 @@ function App() {
                ))}
             </ul>
 
-            {/*             <a className="group text-pink-500 transition-all duration-300 ease-in-out" href="#">
-               <span className="bg-left-bottom bg-gradient-to-r from-pink-500 to-pink-500 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
-                  This text gets on hover
-               </span>
-            </a>
- */}
-            {data.length < 1 ? null : (
-               <p className={style.count}>{`Te quedan ${
-                  data.filter((pendientes) => pendientes.completed === false).length
-               } recaos pendientes`}</p>
-            )}
+            <button
+               type="button"
+               className={
+                  !(data.length > 7)
+                     ? ''
+                     : 'fixed bottom-48 right-3 inline-block rounded-full bg-gray-200 p-2 uppercase leading-normal text-gray-700 shadow-sm shadow-gray-900 hover:scale-150 hover:bg-white transition-all duration-500 scale-125'
+               }
+               onClick={
+                  scrollPosition === 0
+                     ? () => window.scrollTo(0, 0)
+                     : () => window.scrollTo(0, document.body.scrollHeight)
+               }
+            >
+               <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  strokeWidth="3"
+                  stroke="currentColor"
+                  className="h-5 w-5 animate-bounce"
+               >
+                  {scrollPosition === 0 ? (
+                     <path
+                        fillRule="evenodd"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75"
+                        clipRule="evenodd"
+                     />
+                  ) : (
+                     <path
+                        fillRule="evenodd"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12.0676 4.5003L11.9324 19.4997ZM11.9324 19.4997L18.743 12.8108ZM11.9324 19.4997L5.24352 12.6892Z"
+                        clipRule="evenodd"
+                     />
+                  )}
+               </svg>
+            </button>
          </div>
       </div>
    );

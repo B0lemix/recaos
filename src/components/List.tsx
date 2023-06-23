@@ -27,7 +27,7 @@ const List = ({ dataList, toggleComplete, deleteToDo, editToDo }) => {
                {dataList.text}
             </p>
          </div>
-         <div className="flex gap-10">
+         <div className="flex gap-10 mr-10">
             <button onClick={() => editToDo(dataList)}>
                <FaRegEdit className="transform transition duration-200 hover:scale-125" />
             </button>

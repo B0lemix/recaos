@@ -8,6 +8,9 @@ module.exports = {
     extend: {
       fontFamily: {
         'caveat':['"Caveat"', "cursive"]
+      },
+      animation: {
+        'bounce-slow': 'bounce 3s linear infinite',
       }
     },
   },
