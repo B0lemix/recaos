@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './App.css';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlinePlus, AiOutlineUnorderedList } from 'react-icons/ai';
 import List from 'components/List';
 import db from './firebase';
 import {
@@ -18,9 +18,10 @@ const style = {
    img: 'object-cover h-36 w-full rounded-lg  ',
    container: 'bg-slate-100 max-w-[500px] w-full m-auto rounded-md shadow-2xl p-4 font-semibold',
    heading: 'text-3xl font-bold text-center text-gray-800',
-   form: 'flex justify-between ',
+   form: 'flex mb-2 justify-between ',
    input: 'border p-2 w-full text-xl shadow-md',
    button: 'border p-4 ml-2 bg-[#776b53] text-slate-100 hover:bg-[#8a8a72]',
+   buttonOrder: 'border p-4 ml-2 bg-[#776b53] text-slate-100 hover:bg-[#8a8a72]',
    count: 'text-center p-2 mb-2 flex justify-center items-center',
 };
 
@@ -29,6 +30,8 @@ function App() {
    const [input, setInput] = useState('');
    const [editMode, setEditMode] = useState(false);
    const [editID, setEditID] = useState('');
+
+   const inputElement = useRef();
 
    /*    const [scrollPosition, setScrollPosition] = useState(0);
 
@@ -65,6 +68,7 @@ function App() {
       };
    }, [scrollPosition]);
 
+
    //CREATE TODO
 
    const createDoc = async (e) => {
@@ -85,6 +89,8 @@ function App() {
          console.log('updated');
          console.log(input);
       }
+      setEditMode(false);
+      setInput('');
    };
 
    //READ TODO
@@ -111,6 +117,7 @@ function App() {
 
    const editToDo = async (data) => {
       console.log(data);
+
       setEditMode(true);
       setEditID(data.id);
       setInput(data.text);
@@ -121,6 +128,24 @@ function App() {
    const deleteToDo = async (id) => {
       await deleteDoc(doc(db, 'todos', id));
    };
+
+   const sortData = () => {
+     /*  console.log(data.sort((a,b) => (a.text > b.text) ? 1 : ((b.text > a.text) ? -1 : 0))); */
+      const orderAZ = data.sort((a, b) => (a.text > b.text) ? 1 : ((b.text > a.text) ? -1 : 0))
+      console.log(orderAZ);
+      
+      return setData(orderAZ);
+   };
+
+   
+   useEffect(() => {
+      
+      console.log(data,'data');
+      
+   }, [data])
+   
+
+
 
    return (
       <div className={style.bg}>
@@ -144,6 +169,7 @@ function App() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   className={style.input}
+                  ref={inputElement}
                   type="text"
                   placeholder="Añadir recao"
                />
@@ -153,6 +179,9 @@ function App() {
             </form>
 
             <ul>
+               <button className={style.buttonOrder} onClick={() => sortData()}>
+                  <AiOutlineUnorderedList size={30} />
+               </button>
                {data.map((element, index) => (
                   <List
                      key={index}
@@ -160,6 +189,7 @@ function App() {
                      toggleComplete={toggleComplete}
                      deleteToDo={deleteToDo}
                      editToDo={editToDo}
+                     inputElement={inputElement}
                   />
                ))}
             </ul>

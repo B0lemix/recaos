@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { FaRegTrashAlt, FaRegEdit } from 'react-icons/fa';
 
-const List = ({ dataList, toggleComplete, deleteToDo, editToDo }) => {
+const List = ({ dataList, toggleComplete, deleteToDo, editToDo,inputElement }) => {
    const style = {
       li: 'flex justify-between bg-slate-200 p-4 my-2 capitalize text-2xl font-[Caveat]',
       liCompleted: 'flex justify-between bg-slate-400 p-4 my-2 capitalize',
@@ -28,7 +28,7 @@ const List = ({ dataList, toggleComplete, deleteToDo, editToDo }) => {
             </p>
          </div>
          <div className="flex gap-10 mr-10">
-            <button onClick={() => editToDo(dataList)}>
+            <button onClick={() => {editToDo(dataList);inputElement.current.focus()}}>
                <FaRegEdit className="transform transition duration-200 hover:scale-125" />
             </button>
             <button onClick={() => deleteToDo(dataList.id)}>
